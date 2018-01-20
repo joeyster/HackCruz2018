@@ -39,12 +39,12 @@ public class TestGraph extends Application {
     private double prevY = 10;
     private double y = 10;*/
     
-    private double x = 0;
     private int cycles = 0;
     private int speed = 1;
     private int max = 0;
 
     private void init(Stage primaryStage) {
+    	//obtain needed parameters..............................
     	List<String> stats = this.getParameters().getUnnamed();
     	String cellSequence = stats.get(0);
     	double timeFrame = Double.parseDouble(stats.get(1));
@@ -66,16 +66,18 @@ public class TestGraph extends Application {
     	double textField_10 = Double.parseDouble(stats.get(17));
     	double textField_11 = Double.parseDouble(stats.get(18));
     	double factorAmount = Double.parseDouble(stats.get(19));
-    	double beneficialSeq = Double.parseDouble(stats.get(20));
+    	String beneficialSeq = (stats.get(20));
     	double bsDeath = Double.parseDouble(stats.get(21));
     	double bsReproduction = Double.parseDouble(stats.get(22));
     	double bsLocation = Double.parseDouble(stats.get(23));
     	double introTime = Double.parseDouble(stats.get(24));
     	double deathChance = Double.parseDouble(stats.get(25));
     	double reproductionChance = Double.parseDouble(stats.get(26));
-    	
+
     	EnvironmentalFactor ef = new EnvironmentalFactor();
     	ef.getPop().add(cellSequence);
+    	//check if starting sequence has beneficial sequence
+    	if(cellSequence.contains(beneficialSeq)) ef.surcellinc();
     	cycles = 0;
     	
     	Label lbl = new Label("Cell Population: 0");
@@ -85,7 +87,7 @@ public class TestGraph extends Application {
     	//add in all elements into stage
         Group root = new Group();
         primaryStage.setScene(new Scene(root));
-        root.getChildren().add(createChart());
+        root.getChildren().add(createChart(cellSequence.contains(beneficialSeq)));
         root.getChildren().add(createStartButton());
         root.getChildren().add(createStopButton());
         root.getChildren().add(createSpeedButton());
@@ -106,14 +108,13 @@ public class TestGraph extends Application {
                 	//update cell population
             	int statikksize = ef.getPop().size();
             	for(int i=0; i < statikksize; i++) {
-            		if(!ef.isSurvival(cellSequence, (timeInterval*cycles > introTime), i, bsDeath, bsReproduction, aMutation, tMutation, gMutation, cMutation, deathChance, reproductionChance))
+            		if(!ef.isSurvival(ef.getPop().get(i), (timeInterval*cycles > introTime), i, bsDeath, bsReproduction, aMutation, tMutation, gMutation, cMutation, deathChance, reproductionChance))
             			i--;
             	}
-            	plotTime();
+            	plotTime(ef.getPop().size(), ef.getSurcell());
             	//Input population here
             	lbl.setText("Cell Population:\n" + ef.getPop().size());
-            	//TODO REMOVE FLOOR LATER
-            	if((Math.floor(x) > max)) max = (int)Math.floor(x);
+            	if(ef.getPop().size() > max) max = ef.getPop().size();
             	cycles++;
             }
         }));
@@ -187,16 +188,23 @@ public class TestGraph extends Application {
     	return bn;
     }
     
-    protected BarChart<String, Number> createChart() {
+    protected BarChart<String, Number> createChart(boolean isSur) {
     	//setup axes
     	final CategoryAxis xAxis = new CategoryAxis(FXCollections.observableArrayList("Survival Cells", "Non-Survival Cells"));
     	final NumberAxis yAxis = new NumberAxis(0,100,10);
     	
     	//setup initial barss
     	mainSeries = new XYChart.Series<String, Number>();
-        x = Math.random()*100;
-        mainSeries.getData().add(new XYChart.Data<String,Number>("Survival Cells", x));
-        mainSeries.getData().add(new XYChart.Data<String,Number>("Non-Survival Cells", 100-x));
+        int n;
+        //check if initial cell was survival cell
+        if(isSur) {
+        	n = 100;
+        } else {
+        	n = 0;
+        }
+    	
+        mainSeries.getData().add(new XYChart.Data<String,Number>("Survival Cells", n));
+        mainSeries.getData().add(new XYChart.Data<String,Number>("Non-Survival Cells", 100-n));
         
         //setup barchart
     	final BarChart<String, Number> bc = new BarChart<String, Number>(xAxis, yAxis);
@@ -207,6 +215,7 @@ public class TestGraph extends Application {
     	yAxis.setTickLabelFormatter(new NumberAxis.DefaultFormatter(yAxis, null, "%"));
     	bc.setTranslateX(76);
     	
+    	//bring data into chart
     	bc.getData().add(mainSeries);
     	return bc;
     }
@@ -253,7 +262,7 @@ public class TestGraph extends Application {
         timeInHours = hours + ((1d/60d)*minutes);
     }*/
 
-    private void plotTime() {
+    private void plotTime(int popSize, int surSize) {
 /*        if ((timeInHours % 1) == 0) {
             // change of hour
             double oldY = y;
@@ -286,9 +295,8 @@ public class TestGraph extends Application {
         }
         // after 25hours delete old data
         if (timeInHours > 25) minuteDataSeries.getData().remove(0);*/
-        x = Math.random()*100;
-        mainSeries.getData().add(new XYChart.Data<String,Number>("Survival Cells", x));
-        mainSeries.getData().add(new XYChart.Data<String,Number>("Non-Survival Cells", 100-x));
+        mainSeries.getData().add(new XYChart.Data<String,Number>("Survival Cells", surSize/popSize));
+        mainSeries.getData().add(new XYChart.Data<String,Number>("Non-Survival Cells", 1-(surSize/popSize)));
     }
 
    public void play() {

@@ -9,6 +9,7 @@ public class EnvironmentalFactor{
 	private String introTime;
 	private String deathChance;
 	private String reproductionChance;
+	private int surcell;
 
 	private ArrayList<String> population = new ArrayList<>();
 
@@ -23,6 +24,15 @@ public class EnvironmentalFactor{
 	}
 	
 	public EnvironmentalFactor() {
+		surcell = 0;
+	}
+	//surcell is counter for cells in population with survival sequences "survival cells"
+	public void surcellinc() {
+		surcell++;
+	}
+	
+	public int getSurcell() {
+		return surcell;
 	}
 	
 	public ArrayList<String> getPop() {return population;}
@@ -40,6 +50,7 @@ public class EnvironmentalFactor{
 			n = (double)(rng.nextInt(101))/100;
 			if(n <= bsDeath){
 				population.remove(index);
+				surcell--;
 				return false;
 			}
 			n = (double)(rng.nextInt(101))/100;
@@ -190,6 +201,7 @@ public class EnvironmentalFactor{
 			}
 		}
 		population.add(newSequence);
+		if(newSequence.contains(this.beneficialSeq)) surcell++;
 		return true;
 	}
 	public String[] getArray() {
