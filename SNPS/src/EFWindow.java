@@ -21,6 +21,8 @@ public class EFWindow extends JFrame {
 	private JTextField deathChance;
 	private JTextField introTime;
 	private JTextField reproductiveChance;
+	private JTextField reproductiveBS;
+	private JTextField deathBS;
 
 	/**
 	 * Launch the application.
@@ -55,13 +57,13 @@ public class EFWindow extends JFrame {
 		lblEF.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		contentPane.add(lblEF);
 		
-		JLabel lblBeneficialSequence = new JLabel("Beneficial Sequence(Valid characters are A,T,G,C):");
-		lblBeneficialSequence.setBounds(15, 142, 365, 20);
+		JLabel lblBeneficialSequence = new JLabel("Beneficial Sequence (BS):");
+		lblBeneficialSequence.setBounds(15, 148, 365, 20);
 		lblBeneficialSequence.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPane.add(lblBeneficialSequence);
 		
 		beneficialSequence = new JTextArea();
-		beneficialSequence.setBounds(15, 172, 544, 47);
+		beneficialSequence.setBounds(15, 178, 544, 47);
 		contentPane.add(beneficialSequence);
 		beneficialSequence.setColumns(10);
 		beneficialSequence.setLineWrap(true);
@@ -87,41 +89,65 @@ public class EFWindow extends JFrame {
 				beneficialSequence.setText(randomHundred);
 			}
 		});
-		btnRandom.setBounds(470, 143, 89, 23);
+		btnRandom.setBounds(470, 149, 89, 23);
 		contentPane.add(btnRandom);
 		
 		JLabel lblTimeFrameseconds = new JLabel("Death Chance");
-		lblTimeFrameseconds.setBounds(15, 86, 164, 14);
+		lblTimeFrameseconds.setBounds(15, 91, 164, 14);
 		lblTimeFrameseconds.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPane.add(lblTimeFrameseconds);
 		
 		JLabel lblUpdateIntervalseconds = new JLabel("Introduction time (seconds):");
-		lblUpdateIntervalseconds.setBounds(15, 111, 214, 20);
+		lblUpdateIntervalseconds.setBounds(15, 59, 214, 20);
 		lblUpdateIntervalseconds.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPane.add(lblUpdateIntervalseconds);
 		
 		deathChance = new JTextField();
-		deathChance.setBounds(224, 85, 86, 20);
+		deathChance.setBounds(224, 90, 86, 20);
 		contentPane.add(deathChance);
 		deathChance.setColumns(10);
 		
 		introTime = new JTextField();
-		introTime.setBounds(224, 111, 86, 20);
+		introTime.setBounds(224, 59, 86, 20);
 		contentPane.add(introTime);
 		introTime.setColumns(10);
 		
 		JButton nextButton = new JButton("Next");
+		nextButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		nextButton.setBounds(475, 302, 89, 23);
 		contentPane.add(nextButton);
 		
 		JLabel lblReproductiveChance = new JLabel("Reproductive Chance");
 		lblReproductiveChance.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblReproductiveChance.setBounds(15, 60, 164, 20);
+		lblReproductiveChance.setBounds(15, 117, 164, 20);
 		contentPane.add(lblReproductiveChance);
 		
 		reproductiveChance = new JTextField();
 		reproductiveChance.setColumns(10);
-		reproductiveChance.setBounds(224, 59, 86, 20);
+		reproductiveChance.setBounds(224, 116, 86, 20);
 		contentPane.add(reproductiveChance);
+		
+		JLabel lblBsReproductiveChance = new JLabel("BS Reproductive Chance");
+		lblBsReproductiveChance.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblBsReproductiveChance.setBounds(15, 263, 199, 20);
+		contentPane.add(lblBsReproductiveChance);
+		
+		reproductiveBS = new JTextField();
+		reproductiveBS.setColumns(10);
+		reproductiveBS.setBounds(224, 262, 86, 20);
+		contentPane.add(reproductiveBS);
+		
+		deathBS = new JTextField();
+		deathBS.setColumns(10);
+		deathBS.setBounds(224, 236, 86, 20);
+		contentPane.add(deathBS);
+		
+		JLabel lblBsDeathChance = new JLabel("BS Death Chance");
+		lblBsDeathChance.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblBsDeathChance.setBounds(15, 237, 164, 14);
+		contentPane.add(lblBsDeathChance);
 	}
 }

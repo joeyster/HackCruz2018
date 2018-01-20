@@ -59,8 +59,9 @@ public class MainWindow extends JFrame {
 		StarterBacteria.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		contentPane.add(StarterBacteria);
 		
-		JLabel lblCellSequence = new JLabel("Cell Sequence(Valid characters are A,T,G,C):");
-		lblCellSequence.setBounds(15, 79, 316, 20);
+		JLabel lblCellSequence = new JLabel("Cell Sequence (Valid characters are A,T,G,C):");
+		lblCellSequence.setToolTipText("");
+		lblCellSequence.setBounds(15, 79, 402, 20);
 		lblCellSequence.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		contentPane.add(lblCellSequence);
 		
@@ -110,6 +111,7 @@ public class MainWindow extends JFrame {
 		textFieldC.setColumns(10);
 		
 		cellSequence = new JTextArea();
+	
 		cellSequence.setBounds(15, 109, 544, 47);
 		contentPane.add(cellSequence);
 		cellSequence.setColumns(10);
