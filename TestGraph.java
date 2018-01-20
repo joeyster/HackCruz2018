@@ -36,20 +36,30 @@ public class TestGraph extends Application {
     private double prevY = 10;
     private double y = 10;*/
     
-    private double x;
+    private double x = 0;
+    private int cycles = 0;
     private int speed = 1;
+    private int max = 0;
 
     private void init(Stage primaryStage) {
+    	Label lbl = new Label("Cell Population: 0");
+    	lbl.setTranslateY(76);
+    	lbl.setTranslateX(5);
+    	
+    	//add in all elements into stage
         Group root = new Group();
         primaryStage.setScene(new Scene(root));
         root.getChildren().add(createChart());
         root.getChildren().add(createStartButton());
         root.getChildren().add(createStopButton());
         root.getChildren().add(createSpeedButton());
-        // create timeline to add new data every 60th of second
+        root.getChildren().add(createResetButton());
+        root.getChildren().add(lbl);
+        
+        //SET TIMELINE
+        // KeyFrame = interval
         animation = new Timeline();
-        //Can set rate of animation, 2 = 2x speed
-        //animation.setRate(2);
+        //TODO CHANGE INTERVAL
         animation.getKeyFrames().add(new KeyFrame(Duration.millis(500), new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent actionEvent) {
                 // 6 minutes data per frame
@@ -57,14 +67,53 @@ public class TestGraph extends Application {
                     nextTime();
                     plotTime();
                 }*/
-            	plotTime();
+            	if(500*cycles > 1000) plotTime();
+            	//Input population here
+            	lbl.setText("Cell Population:\n" + x);
+            	//TODO REMOVE FLOOR LATER
+            	if((Math.floor(x) > max)) max = (int)Math.floor(x);
+            	cycles++;
             }
         }));
-        animation.setCycleCount(Animation.INDEFINITE);
+        
+        //Lifetime/interval = cycles
+        animation.setCycleCount(10);
+    }
+        
+        //////////////////////////////////////////////////Finish screens
+/*    private void init2(Stage primaryStage) {
+        Group root2 = new Group();
+        primaryStage.setScene(new Scene(root2));
+        root2.getChildren().add(lblset());
+        
+    }*/
+    
+    protected Group lblset() {
+    	Label startseq = new Label("START SEQUENCE");
+    	Label finalpop = new Label("Final Cell Population:\n" + x);
+    	Label maxpop = new Label("Cell Population Max:\n" + max);
+    	
+    	Group lbls = new Group();
+    	lbls.getChildren().add(startseq);
+    	lbls.getChildren().add(finalpop);
+    	lbls.getChildren().add(maxpop);
+    	return lbls;
+    }
+    
+    protected Button createResetButton() {
+    	Button bn = new Button("Reset");
+    	bn.setPrefSize(45, 25);
+    	bn.setOnAction(actionEvent -> {
+    		animation.play();
+    	});
+    	bn.setTranslateX(58);
+    	bn.setTranslateY(38);
+    	return bn;
     }
     
     protected Button createStartButton() {
     	Button bn = new Button("Start");
+    	bn.setPrefSize(45, 25);
     	bn.setOnAction(actionEvent -> {
     		animation.play();
     	});
@@ -74,6 +123,7 @@ public class TestGraph extends Application {
     
     protected Button createStopButton() {
     	Button bn = new Button("Stop");
+    	bn.setPrefSize(45, 25);
     	bn.setOnAction(actionEvent -> {
     		animation.pause();
     	});
@@ -83,6 +133,7 @@ public class TestGraph extends Application {
     
     protected Button createSpeedButton() {
     	Button bn = new Button("1x");
+    	bn.setPrefSize(45, 25);
     	bn.setOnAction(actionEvent -> {
     		speed++;
     		if(speed > 3) speed = 1;
@@ -96,7 +147,7 @@ public class TestGraph extends Application {
     
     protected BarChart<String, Number> createChart() {
     	//setup axes
-    	final CategoryAxis xAxis = new CategoryAxis(FXCollections.observableArrayList("Survival Cells", "Non-survival Cells"));
+    	final CategoryAxis xAxis = new CategoryAxis(FXCollections.observableArrayList("Survival Cells", "Non-Survival Cells"));
     	final NumberAxis yAxis = new NumberAxis(0,100,10);
     	
     	//setup initial barss
@@ -113,6 +164,7 @@ public class TestGraph extends Application {
     	yAxis.setLabel("Distribution of cells");
     	yAxis.setTickLabelFormatter(new NumberAxis.DefaultFormatter(yAxis, null, "%"));
     	bc.setTranslateX(76);
+    	
     	bc.getData().add(mainSeries);
     	return bc;
     }
@@ -194,7 +246,7 @@ public class TestGraph extends Application {
         if (timeInHours > 25) minuteDataSeries.getData().remove(0);*/
         x = Math.random()*100;
         mainSeries.getData().add(new XYChart.Data<String,Number>("Survival Cells", x));
-        mainSeries.getData().add(new XYChart.Data<String,Number>("Non-survival Cells", 100-x));
+        mainSeries.getData().add(new XYChart.Data<String,Number>("Non-Survival Cells", 100-x));
     }
 
    public void play() {
@@ -209,6 +261,9 @@ public class TestGraph extends Application {
         init(primaryStage);
         primaryStage.show();
         play();
+//        init2(primaryStage);
+//        primaryStage.show();
+//        play();
     }
     public static void main(String[] args) { launch(args); }
 }
