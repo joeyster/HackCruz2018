@@ -3,50 +3,51 @@ import java.util.ArrayList;
 
 public class EnvironmentalFactor{
 	private String beneficialSeq;
-	private float bsReproduction;
-	private float bsDeath;
-	private String cellSequence;
-	private float reproductionChance;
-	private float deathChance;
-	private float aMutation;
-	private float gMutation;
-	private float tMutation;
-	private float cMutation;
+	private String bsDeath;
+	private String bsReproduction;
+	private String bsLocation;
+	private String introTime;
+	private String deathChance;
+	private String reproductionChance;
 
 	private ArrayList<String> population = new ArrayList<>();
 
-	public EnvironmentalFactor(String beneficialSeq, float bsReproduction, float bsDeath, String cellSequence, float reproductionChance, float deathChance,float aMutation, float gMutation, float tMutation, float cMutation){
+	public EnvironmentalFactor(String beneficialSeq, String bsDeath, String bsReproduction, String bsLocation, String introTime, String deathChance, String reproductionChance){
 		this.beneficialSeq = beneficialSeq;
-		this.bsReproduction = bsReproduction;
 		this.bsDeath = bsDeath;
-		this.cellSequence = cellSequence;
-		this.reproductionChance = reproductionChance;
+		this.bsLocation = bsLocation;
+		this.introTime = introTime;
+		this.bsReproduction = bsReproduction;
 		this.deathChance = deathChance;
-		this.aMutation = aMutation;
-		this.gMutation = gMutation;
-		this.tMutation = tMutation;
-		this.cMutation = cMutation;
+		this.reproductionChance = reproductionChance;
 	}
+	
+	public EnvironmentalFactor() {
+	}
+	
+	public ArrayList<String> getPop() {return population;}
 
-	public void isSurvival(){
-		population.add(this.cellSequence);
+	public boolean isSurvival(String cellSequence, boolean introd, int index, double bsDeath, double bsReproduction, 
+			double aMutation, double tMutation, double gMutation, double cMutation, double deathChance, double reproductionChance){
+
 		Random rng = new Random();
 		int cellsLength = cellSequence.length();
 		String newSequence = "";
-		float n;
-		float mutationTo;
+		double n;
+		double mutationTo;
 
-		if(this.cellSequence.contains(this.beneficialSeq)){ //contains beneficial
-			n = (float)(rng.nextInt(101))/100;
-			if(n <= this.bsDeath){
-				population.remove(population.size());
+		if(cellSequence.contains(this.beneficialSeq) && introd == true){ //contains beneficial
+			n = (double)(rng.nextInt(101))/100;
+			if(n <= bsDeath){
+				population.remove(index);
+				return false;
 			}
-			n = (float)(rng.nextInt(101))/100;
-			if(n <= this.bsReproduction){
+			n = (double)(rng.nextInt(101))/100;
+			if(n <= bsReproduction){
 				for(int i = 0; i < cellsLength; i++){
 					if (cellSequence.charAt(i) == 'A'){
-						if ((float)(rng.nextInt(101))/100 < aMutation){
-							mutationTo = (float)(rng.nextInt(101))/100;
+						if ((double)(rng.nextInt(101))/100 < aMutation){
+							mutationTo = (double)(rng.nextInt(101))/100;
 							if(mutationTo < 0.33){
 								newSequence+="T";
 							}
@@ -61,8 +62,8 @@ public class EnvironmentalFactor{
 						}
 					}
 					if (cellSequence.charAt(i) == 'T'){
-						if ((float)(rng.nextInt(101))/100 < tMutation){
-							mutationTo = (float)(rng.nextInt(101))/100;
+						if ((double)(rng.nextInt(101))/100 < tMutation){
+							mutationTo = (double)(rng.nextInt(101))/100;
 							if(mutationTo < 0.33){
 								newSequence+="A";
 							}
@@ -77,8 +78,8 @@ public class EnvironmentalFactor{
 						}
 					}
 					if (cellSequence.charAt(i) == 'G'){
-						if ((float)(rng.nextInt(101))/100 < gMutation){
-							mutationTo = (float)(rng.nextInt(101))/100;
+						if ((double)(rng.nextInt(101))/100 < gMutation){
+							mutationTo = (double)(rng.nextInt(101))/100;
 							if(mutationTo < 0.33){
 								newSequence+="T";
 							}
@@ -93,8 +94,8 @@ public class EnvironmentalFactor{
 						}
 					}
 					if (cellSequence.charAt(i) == 'C'){
-						if ((float)(rng.nextInt(101))/100 < cMutation){
-							mutationTo = (float)(rng.nextInt(101))/100;
+						if ((double)(rng.nextInt(101))/100 < cMutation){
+							mutationTo = (double)(rng.nextInt(101))/100;
 							if(mutationTo < 0.33){
 								newSequence+="T";
 							}
@@ -109,18 +110,20 @@ public class EnvironmentalFactor{
 						}
 					}
 				}
+				
 			}
 			else{ //doesnt contain beneficial
-				n = (float)(rng.nextInt(101))/100;
-				if(n <= this.deathChance){
-					population.remove(population.size());
+				n = (double)(rng.nextInt(101))/100;
+				if(n <= deathChance){
+					population.remove(index);
+					return false;
 				}
-				n = (float)(rng.nextInt(101))/100;
-				if(n <= this.reproductionChance){
+				n = (double)(rng.nextInt(101))/100;
+				if(n <= reproductionChance){
 					for(int i = 0; i < cellsLength; i++){
 						if (cellSequence.charAt(i) == 'A'){
-							if ((float)(rng.nextInt(101))/100 < aMutation){
-								mutationTo = (float)(rng.nextInt(101))/100;
+							if ((double)(rng.nextInt(101))/100 < aMutation){
+								mutationTo = (double)(rng.nextInt(101))/100;
 								if(mutationTo < 0.33){
 									newSequence+="T";
 								}
@@ -135,8 +138,8 @@ public class EnvironmentalFactor{
 							}
 						}
 						if (cellSequence.charAt(i) == 'T'){
-							if ((float)(rng.nextInt(101))/100 < tMutation){
-								mutationTo = (float)(rng.nextInt(101))/100;
+							if ((double)(rng.nextInt(101))/100 < tMutation){
+								mutationTo = (double)(rng.nextInt(101))/100;
 								if(mutationTo < 0.33){
 									newSequence+="A";
 								}
@@ -151,8 +154,8 @@ public class EnvironmentalFactor{
 							}
 						}
 						if (cellSequence.charAt(i) == 'G'){
-							if ((float)(rng.nextInt(101))/100 < gMutation){
-								mutationTo = (float)(rng.nextInt(101))/100;
+							if ((double)(rng.nextInt(101))/100 < gMutation){
+								mutationTo = (double)(rng.nextInt(101))/100;
 								if(mutationTo < 0.33){
 									newSequence+="T";
 								}
@@ -167,8 +170,8 @@ public class EnvironmentalFactor{
 							}
 						}
 						if (cellSequence.charAt(i) == 'C'){
-							if ((float)(rng.nextInt(101))/100 < cMutation){
-								mutationTo = (float)(rng.nextInt(101))/100;
+							if ((double)(rng.nextInt(101))/100 < cMutation){
+								mutationTo = (double)(rng.nextInt(101))/100;
 								if(mutationTo < 0.33){
 									newSequence+="T";
 								}
@@ -186,5 +189,19 @@ public class EnvironmentalFactor{
 				}
 			}
 		}
+		population.add(newSequence);
+		return true;
+	}
+	public String[] getArray() {
+		String[] arr = new String[7];
+		arr[0] = this.beneficialSeq;
+		arr[1] = this.bsDeath;
+		arr[2] = this.bsReproduction;
+		arr[3] = this.bsLocation;
+		arr[4] = this.introTime;
+		arr[5] = this.deathChance;
+		arr[6] = this.reproductionChance;
+		
+		return arr;
 	}
 }

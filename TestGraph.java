@@ -3,6 +3,9 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
+import java.util.List;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -42,6 +45,39 @@ public class TestGraph extends Application {
     private int max = 0;
 
     private void init(Stage primaryStage) {
+    	List<String> stats = this.getParameters().getUnnamed();
+    	String cellSequence = stats.get(0);
+    	double timeFrame = Double.parseDouble(stats.get(1));
+    	double timeInterval = Double.parseDouble(stats.get(2));
+    	double aMutation = Double.parseDouble(stats.get(3));
+    	double tMutation= Double.parseDouble(stats.get(4));
+    	double gMutation = Double.parseDouble(stats.get(5));
+    	double cMutation = Double.parseDouble(stats.get(6));
+    	double textField = Double.parseDouble(stats.get(7));
+    	double textField_1= Double.parseDouble(stats.get(8));
+    	double textField_2 = Double.parseDouble(stats.get(9));
+    	double textField_3 = Double.parseDouble(stats.get(10));
+    	double textField_4 = Double.parseDouble(stats.get(11));
+    	double textField_5 = Double.parseDouble(stats.get(12));
+    	double textField_6 = Double.parseDouble(stats.get(13));
+    	double textField_7 = Double.parseDouble(stats.get(14));
+    	double textField_8 = Double.parseDouble(stats.get(15));
+    	double textField_9 = Double.parseDouble(stats.get(16));
+    	double textField_10 = Double.parseDouble(stats.get(17));
+    	double textField_11 = Double.parseDouble(stats.get(18));
+    	double factorAmount = Double.parseDouble(stats.get(19));
+    	double beneficialSeq = Double.parseDouble(stats.get(20));
+    	double bsDeath = Double.parseDouble(stats.get(21));
+    	double bsReproduction = Double.parseDouble(stats.get(22));
+    	double bsLocation = Double.parseDouble(stats.get(23));
+    	double introTime = Double.parseDouble(stats.get(24));
+    	double deathChance = Double.parseDouble(stats.get(25));
+    	double reproductionChance = Double.parseDouble(stats.get(26));
+    	
+    	EnvironmentalFactor ef = new EnvironmentalFactor();
+    	ef.getPop().add(cellSequence);
+    	cycles = 0;
+    	
     	Label lbl = new Label("Cell Population: 0");
     	lbl.setTranslateY(76);
     	lbl.setTranslateX(5);
@@ -60,16 +96,22 @@ public class TestGraph extends Application {
         // KeyFrame = interval
         animation = new Timeline();
         //TODO CHANGE INTERVAL
-        animation.getKeyFrames().add(new KeyFrame(Duration.millis(500), new EventHandler<ActionEvent>() {
+        animation.getKeyFrames().add(new KeyFrame(Duration.millis(timeInterval*1000), new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent actionEvent) {
                 // 6 minutes data per frame
 /*                for(int count=0; count < 6; count++) {
                     nextTime();
                     plotTime();
                 }*/
-            	if(500*cycles > 1000) plotTime();
+                	//update cell population
+            	int statikksize = ef.getPop().size();
+            	for(int i=0; i < statikksize; i++) {
+            		if(!ef.isSurvival(cellSequence, (timeInterval*cycles > introTime), i, bsDeath, bsReproduction, aMutation, tMutation, gMutation, cMutation, deathChance, reproductionChance))
+            			i--;
+            	}
+            	plotTime();
             	//Input population here
-            	lbl.setText("Cell Population:\n" + x);
+            	lbl.setText("Cell Population:\n" + ef.getPop().size());
             	//TODO REMOVE FLOOR LATER
             	if((Math.floor(x) > max)) max = (int)Math.floor(x);
             	cycles++;
@@ -77,7 +119,7 @@ public class TestGraph extends Application {
         }));
         
         //Lifetime/interval = cycles
-        animation.setCycleCount(10);
+        animation.setCycleCount((int)Math.floor(timeFrame/timeInterval));
     }
         
         //////////////////////////////////////////////////Finish screens
@@ -158,7 +200,7 @@ public class TestGraph extends Application {
         
         //setup barchart
     	final BarChart<String, Number> bc = new BarChart<String, Number>(xAxis, yAxis);
-    	bc.setAnimated(false);
+    	bc.setAnimated(true);
     	bc.setLegendVisible(false);
     	bc.setTitle("Single Nucleotide Polymorphism Simulator");
     	yAxis.setLabel("Distribution of cells");
