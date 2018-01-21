@@ -107,11 +107,13 @@ public class EFWindow extends JFrame {
 		contentPane.add(lblUpdateIntervalseconds);
 		
 		deathChance = new JTextField();
+		deathChance.setText(".8");
 		deathChance.setBounds(234, 246, 86, 20);
 		contentPane.add(deathChance);
 		deathChance.setColumns(10);
 		
 		introTime = new JTextField();
+		introTime.setText("20");
 		introTime.setBounds(234, 217, 86, 20);
 		contentPane.add(introTime);
 		introTime.setColumns(10);
@@ -143,6 +145,7 @@ public class EFWindow extends JFrame {
 		contentPane.add(lblReproductiveChance);
 		
 		reproductiveChance = new JTextField();
+		reproductiveChance.setText(".4");
 		reproductiveChance.setColumns(10);
 		reproductiveChance.setBounds(234, 277, 86, 20);
 		contentPane.add(reproductiveChance);
@@ -153,11 +156,13 @@ public class EFWindow extends JFrame {
 		contentPane.add(lblBsReproductiveChance);
 		
 		reproductiveBS = new JTextField();
+		reproductiveBS.setText(".99");
 		reproductiveBS.setColumns(10);
 		reproductiveBS.setBounds(473, 149, 86, 20);
 		contentPane.add(reproductiveBS);
 		
 		deathBS = new JTextField();
+		deathBS.setText(".01");
 		deathBS.setColumns(10);
 		deathBS.setBounds(151, 147, 86, 20);
 		contentPane.add(deathBS);
