@@ -40,9 +40,16 @@ public class TestGraph extends Application {
     private double y = 10;*/
     
     private String cellSequence;
+    private String beneficialSeq;
+    private boolean introd;
     private int cycles = 0;
     private int speed = 1;
     private int max = 0;
+    
+    //mid, preEF populations
+    private int midSurPop = 0;
+    private int midNonPop = 0;
+    private int midPop = 0;
     
     //final populations
     private int finSurPop = 0;
@@ -72,7 +79,7 @@ public class TestGraph extends Application {
     	double textField_10 = Double.parseDouble(stats.get(17));
     	double textField_11 = Double.parseDouble(stats.get(18));
     	double factorAmount = Double.parseDouble(stats.get(19));
-    	String beneficialSeq = (stats.get(20));
+    	beneficialSeq = (stats.get(20));
     	double bsDeath = Double.parseDouble(stats.get(21));
     	double bsReproduction = Double.parseDouble(stats.get(22));
     	try {
@@ -90,6 +97,7 @@ public class TestGraph extends Application {
     	//check if starting sequence has beneficial sequence
     	if(cellSequence.contains(beneficialSeq)) ef.surcellinc();
     	cycles = 0;
+    	introd = false;
     	
     	Label lbl = new Label("Cell Population: 0");
     	lbl.setTranslateY(76);
@@ -98,7 +106,7 @@ public class TestGraph extends Application {
     	//add in all elements into stage
         Group root = new Group();
         primaryStage.setScene(new Scene(root));
-        root.getChildren().add(createChart(cellSequence.contains(beneficialSeq)));
+        root.getChildren().add(createChart(cellSequence.contains(beneficialSeq), false));
         root.getChildren().add(createStartButton());
         root.getChildren().add(createStopButton());
         root.getChildren().add(createSpeedButton());
@@ -119,16 +127,26 @@ public class TestGraph extends Application {
                 	//update cell population
             		int statikksize = ef.getPop().size();
             		if(timeInterval*cycles > introTime) {
+            			if(!introd) {
+            				introd = true;
+            				midSurPop = ef.getSurcell();
+            				midNonPop = ef.getPop().size()-midSurPop;
+            				midPop = ef.getPop().size();
+            			}
             			for(int i=0; i < statikksize; i++) {
             				//after intro time, ef rates
-            				if(!ef.isSurvival(ef.getPop().get(i), true, i, bsDeath, bsReproduction, aMutation, tMutation, gMutation, cMutation, deathChance, reproductionChance))
+            				if(!ef.isSurvival(ef.getPop().get(i), true, i, bsDeath, bsReproduction, aMutation, tMutation, gMutation, cMutation, deathChance, reproductionChance,
+            						textField, textField_1, textField_2, textField_3, textField_4, textField_5, textField_6,
+            						textField_7, textField_8, textField_9, textField_10, textField_11))
             					i--;
             					statikksize--;
             			}
             		} else {
             			//before intro time, 100% repro rate, 0% death rate
             			for(int i=0; i < statikksize; i++) {
-            				ef.isSurvival(ef.getPop().get(i), false, i, 0, 0, aMutation, tMutation, gMutation, cMutation, 0, 1);
+            				ef.isSurvival(ef.getPop().get(i), false, i, 0, 0, aMutation, tMutation, gMutation, cMutation, 0, 1,
+            						textField, textField_1, textField_2, textField_3, textField_4, textField_5, textField_6,
+            						textField_7, textField_8, textField_9, textField_10, textField_11);
             			}
             		}
             		plotTime((double)ef.getPop().size(), (double)ef.getSurcell());
@@ -183,10 +201,29 @@ public class TestGraph extends Application {
     }
     
     protected void lblset(Group root2) {
-    	Label startseq = new Label(cellSequence);
+    	Label startseq = new Label("Start Sequence: " + cellSequence);
     	startseq.setWrapText(true);
     	startseq.setPrefWidth(200);
     	startseq.setTranslateX(5);
+    	Label surseq = new Label("Survival Sequence: " + beneficialSeq);
+    	surseq.setWrapText(true);
+    	surseq.setPrefWidth(200);
+    	surseq.setTranslateX(5);
+    	surseq.setTranslateY(300);
+    	Label midpop = new Label("Pre-EF Cell Population:\n" + midPop);
+    	midpop.setTranslateX(405);
+    	midpop.setWrapText(true);
+    	midpop.setPrefWidth(200);
+    	Label midsurpop = new Label("Pre-EF Survival Cell Population:\n" + midSurPop);
+    	midsurpop.setTranslateX(405);
+    	midsurpop.setWrapText(true);
+    	midsurpop.setPrefWidth(200);
+    	midsurpop.setTranslateY(35);
+    	Label midnonpop = new Label("Pre-EF Non-Survival Cell Population:\n" + midNonPop);
+    	midnonpop.setTranslateX(405);
+    	midnonpop.setWrapText(true);
+    	midnonpop.setPrefWidth(200);
+    	midnonpop.setTranslateY(70);
     	Label finalpop = new Label("Final Cell Population:\n" + finPop);
     	finalpop.setTranslateX(205);
     	finalpop.setWrapText(true);
@@ -212,6 +249,10 @@ public class TestGraph extends Application {
     	root2.getChildren().add(maxpop);
     	root2.getChildren().add(finsurpop);
     	root2.getChildren().add(finnonpop);
+    	root2.getChildren().add(midpop);
+    	root2.getChildren().add(midsurpop);
+    	root2.getChildren().add(midnonpop);
+    	root2.getChildren().add(surseq);
     }
 /////TODO RESET?
 /*    protected Button createResetButton() {
@@ -259,7 +300,7 @@ public class TestGraph extends Application {
     	return bn;
     }
     
-    protected BarChart<String, Number> createChart(boolean isSur) {
+    protected BarChart<String, Number> createChart(boolean isSur, boolean mid) {
     	//setup axes
     	final CategoryAxis xAxis = new CategoryAxis(FXCollections.observableArrayList("Survival Cells", "Non-Survival Cells"));
     	final NumberAxis yAxis = new NumberAxis(0,100,10);

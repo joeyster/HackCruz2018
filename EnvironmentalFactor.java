@@ -42,7 +42,9 @@ public class EnvironmentalFactor{
 	public ArrayList<String> getPop() {return population;}
 
 	public boolean isSurvival(String cellSequence, boolean introd, int index, double bsDeath, double bsReproduction, 
-			double aMutation, double tMutation, double gMutation, double cMutation, double deathChance, double reproductionChance){
+			double aMutation, double tMutation, double gMutation, double cMutation, double deathChance, double reproductionChance,
+			double atot, double atog, double atoc, double ttoa, double ttog, double ttoc, double gtoa, 
+			double gtot, double gtoc, double ctoa, double ctot, double ctog){
 
 		Random rng = new Random();
 		int cellsLength = cellSequence.length();
@@ -64,10 +66,10 @@ public class EnvironmentalFactor{
 					if (cellSequence.charAt(i) == 'A'){
 						if ((double)(rng.nextInt(101))/100 < aMutation){
 							mutationTo = (double)(rng.nextInt(101))/100;
-							if(mutationTo < 0.33){
+							if(mutationTo < atot){
 								newSequence+="T";
 							}
-							else if(mutationTo < 0.66){
+							else if(mutationTo <= (atog+atot)){
 								newSequence+="G";
 							}
 							else{
@@ -80,10 +82,10 @@ public class EnvironmentalFactor{
 					if (cellSequence.charAt(i) == 'T'){
 						if ((double)(rng.nextInt(101))/100 < tMutation){
 							mutationTo = (double)(rng.nextInt(101))/100;
-							if(mutationTo < 0.33){
+							if(mutationTo < ttoa){
 								newSequence+="A";
 							}
-							else if(mutationTo < 0.66){
+							else if(mutationTo <= (ttog+ttoa)){
 								newSequence+="G";
 							}
 							else{
@@ -96,10 +98,10 @@ public class EnvironmentalFactor{
 					if (cellSequence.charAt(i) == 'G'){
 						if ((double)(rng.nextInt(101))/100 < gMutation){
 							mutationTo = (double)(rng.nextInt(101))/100;
-							if(mutationTo < 0.33){
+							if(mutationTo < gtot){
 								newSequence+="T";
 							}
-							else if(mutationTo < 0.66){
+							else if(mutationTo <= (gtot+gtoa)){
 								newSequence+="A";
 							}
 							else{
@@ -112,10 +114,10 @@ public class EnvironmentalFactor{
 					if (cellSequence.charAt(i) == 'C'){
 						if ((double)(rng.nextInt(101))/100 < cMutation){
 							mutationTo = (double)(rng.nextInt(101))/100;
-							if(mutationTo < 0.33){
+							if(mutationTo < ctot){
 								newSequence+="T";
 							}
-							else if(mutationTo < 0.66){
+							else if(mutationTo < (ctot+ctog)){
 								newSequence+="G";
 							}
 							else{
@@ -140,10 +142,10 @@ public class EnvironmentalFactor{
 						if (cellSequence.charAt(i) == 'A'){
 							if ((double)(rng.nextInt(101))/100 < aMutation){
 								mutationTo = (double)(rng.nextInt(101))/100;
-								if(mutationTo < 0.33){
+								if(mutationTo < atot){
 									newSequence+="T";
 								}
-								else if(mutationTo < 0.66){
+								else if(mutationTo <= (atot+atog)){
 									newSequence+="G";
 								}
 								else{
@@ -156,10 +158,10 @@ public class EnvironmentalFactor{
 						if (cellSequence.charAt(i) == 'T'){
 							if ((double)(rng.nextInt(101))/100 < tMutation){
 								mutationTo = (double)(rng.nextInt(101))/100;
-								if(mutationTo < 0.33){
+								if(mutationTo < ttoa){
 									newSequence+="A";
 								}
-								else if(mutationTo < 0.66){
+								else if(mutationTo <= (ttoa+ttog)){
 									newSequence+="G";
 								}
 								else{
@@ -172,10 +174,10 @@ public class EnvironmentalFactor{
 						if (cellSequence.charAt(i) == 'G'){
 							if ((double)(rng.nextInt(101))/100 < gMutation){
 								mutationTo = (double)(rng.nextInt(101))/100;
-								if(mutationTo < 0.33){
+								if(mutationTo < gtot){
 									newSequence+="T";
 								}
-								else if(mutationTo < 0.66){
+								else if(mutationTo <= (gtoa+gtot)){
 									newSequence+="A";
 								}
 								else{
@@ -188,10 +190,10 @@ public class EnvironmentalFactor{
 						if (cellSequence.charAt(i) == 'C'){
 							if ((double)(rng.nextInt(101))/100 < cMutation){
 								mutationTo = (double)(rng.nextInt(101))/100;
-								if(mutationTo < 0.33){
+								if(mutationTo < ctot){
 									newSequence+="T";
 								}
-								else if(mutationTo < 0.66){
+								else if(mutationTo <= (ctot+ctog)){
 									newSequence+="G";
 								}
 								else{
