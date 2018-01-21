@@ -96,27 +96,27 @@ public class TestGraph extends Application {
     	introd = false;
     	
     	Label lbl = new Label("Cell Population:\n1");
-    	lbl.setTranslateY(76);
+    	lbl.setTranslateY(116);
     	lbl.setTranslateX(5);
     	
     	Label lbl2 = new Label("Current Time:\n0 s");
-    	lbl2.setTranslateY(286);
+    	lbl2.setTranslateY(326);
     	lbl2.setTranslateX(5);
     	
     	Label lbl3 = new Label("Is EF TRUE?: OFF");
-    	lbl3.setTranslateY(336);
+    	lbl3.setTranslateY(376);
     	lbl3.setTranslateX(5);
     	
     	Label lbl4 = new Label("Max Population:\n1");
-    	lbl4.setTranslateY(236);
+    	lbl4.setTranslateY(276);
     	lbl4.setTranslateX(5);
     	
     	Label lbl5 = new Label("Survivor Cell\nPopulation:\n???");
-    	lbl5.setTranslateY(116);
+    	lbl5.setTranslateY(156);
     	lbl5.setTranslateX(5);
     	
     	Label lbl6 = new Label("Non-Survivor Cell\nPopulation:\n???");
-    	lbl6.setTranslateY(176);
+    	lbl6.setTranslateY(216);
     	lbl6.setTranslateX(5);
     	
     	//add in all elements into stage
@@ -185,9 +185,9 @@ public class TestGraph extends Application {
             			finNonPop = ef.getPop().size()-finSurPop;
             			finPop = ef.getPop().size();
             			Button bn = new Button("Stats");
-            			bn.setPrefSize(45, 25);
-            			bn.setTranslateX(58);
-            			bn.setTranslateY(38);
+            			bn.setPrefSize(65, 45);
+            			bn.setTranslateX(78);
+            			bn.setTranslateY(58);
             			bn.setOnAction(event -> {
             				scene2(primaryStage);
             			});
@@ -203,9 +203,9 @@ public class TestGraph extends Application {
             			finNonPop = 0;
             			finPop = 0;
             			Button bn = new Button("Stats");
-            			bn.setPrefSize(45, 25);
-            			bn.setTranslateX(58);
-            			bn.setTranslateY(38);
+            			bn.setPrefSize(65, 45);
+            			bn.setTranslateX(78);
+            			bn.setTranslateY(58);
             			bn.setOnAction(event -> {
             				scene2(primaryStage);
             			});
@@ -300,7 +300,7 @@ public class TestGraph extends Application {
     
     protected Button createStartButton() {
     	Button bn = new Button("Start");
-    	bn.setPrefSize(45, 25);
+    	bn.setPrefSize(65, 45);
     	bn.setOnAction(actionEvent -> {
     		animation.play();
     	});
@@ -310,24 +310,24 @@ public class TestGraph extends Application {
     
     protected Button createStopButton() {
     	Button bn = new Button("Stop");
-    	bn.setPrefSize(45, 25);
+    	bn.setPrefSize(65, 45);
     	bn.setOnAction(actionEvent -> {
     		animation.pause();
     	});
-    	bn.setTranslateX(58);
+    	bn.setTranslateX(78);
     	return bn;
     }
     
     protected Button createSpeedButton() {
     	Button bn = new Button("1x");
-    	bn.setPrefSize(45, 25);
+    	bn.setPrefSize(65, 45);
     	bn.setOnAction(actionEvent -> {
     		speed++;
     		if(speed > 3) speed = 1;
     		bn.setText(speed + "x");
     		animation.setRate(speed);
     	});
-    	bn.setTranslateY(38);
+    	bn.setTranslateY(58);
     	bn.setTranslateX(5);
     	return bn;
     }
