@@ -99,12 +99,12 @@ public class TestGraph extends Application {
     	lbl.setTranslateY(76);
     	lbl.setTranslateX(5);
     	
-    	Label lbl2 = new Label("Current Time: 0");
+    	Label lbl2 = new Label("Current Time:\n0 s");
     	lbl2.setTranslateY(286);
     	lbl2.setTranslateX(5);
     	
     	Label lbl3 = new Label("Is EF TRUE?: OFF");
-    	lbl3.setTranslateY(326);
+    	lbl3.setTranslateY(336);
     	lbl3.setTranslateX(5);
     	
     	Label lbl4 = new Label("Max Population:\n1");
@@ -173,8 +173,8 @@ public class TestGraph extends Application {
             		plotTime((double)ef.getPop().size(), (double)ef.getSurcell());
             		//Input population here
             		lbl.setText("Cell Population:\n" + ef.getPop().size());
-            		lbl2.setText("Current Time: " + Math.round(timeInterval*cycles+1));            		
-            		if(introTime < timeInterval*cycles+1) lbl3.setText("Is EF TRUE?: " + "ON");            		
+            		lbl2.setText("Current Time:\n" + Math.round(timeInterval*cycles+1) + " s");            		
+            		if(introTime < timeInterval*cycles+2) lbl3.setText("Is EF TRUE?: " + "ON");            		
             		if(ef.getPop().size() > max) max = ef.getPop().size();
             		lbl4.setText("Max Population:\n" + max); 
             		lbl5.setText("Survivor Cell\nPopulation:\n" + ef.getSurcell()); 

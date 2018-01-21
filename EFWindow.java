@@ -77,7 +77,7 @@ public class EFWindow extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				String randomHundred = "";
 				Random rng = new Random();
-				for(int i = 0; i < 100; i++) {
+				for(int i = 0; i < 5; i++) {
 					int randomInt = rng.nextInt(4);
 					switch(randomInt) {
 						case 0: randomHundred += "A";
@@ -133,7 +133,46 @@ public class EFWindow extends JFrame {
 					both[i] = secondInputs[j];
 					j++;
 				}
-				Application.launch(TestGraph.class, both);
+				
+				if(beneficialSequence.getText().equals("") ||  
+						deathChance.getText().equals("") ||  
+						introTime.getText().equals("") ||  
+						reproductiveChance.getText().equals("") ||  
+						reproductiveBS.getText().equals("") ||  
+						deathBS.getText().equals("")) {
+							EmptyError ee = new EmptyError();
+							ee.setVisible(true);
+				}
+				else if(!beneficialSequence.getText().matches("[ATCG]*")) {
+						CellSeqError cse = new CellSeqError();
+						cse.setVisible(true);
+				}
+				else if(!deathChance.getText().matches("[.0-9]*") || 
+						!introTime.getText().matches("[.0-9]*") ||  
+						!reproductiveChance.getText().matches("[.0-9]*") ||  
+						!reproductiveBS.getText().matches("[.0-9]*") ||  
+						!deathBS.getText().matches("[.0-9]*")) {
+							IntegerOnlyError ioe = new IntegerOnlyError();
+							ioe.setVisible(true);
+				}
+				else if (Double.parseDouble(introTime.getText()) >= Double.parseDouble(firstInputs[1])) {
+					IntroductionError iee = new IntroductionError();
+					iee.setVisible(true);
+				}
+				else if (Double.parseDouble(deathChance.getText()) > 1.0 || Double.parseDouble(deathChance.getText()) < 0.0 || 
+						Double.parseDouble(reproductiveChance.getText()) > 1.0 || Double.parseDouble(reproductiveChance.getText()) < 0.0 || 
+						Double.parseDouble(reproductiveBS.getText()) > 1.0 || Double.parseDouble(reproductiveBS.getText()) < 0.0 || 
+						Double.parseDouble(deathBS.getText()) > 1.0 || Double.parseDouble(deathBS.getText()) < 0.0) {
+							BetweenZeroAndOne bzao = new BetweenZeroAndOne();
+							bzao.setVisible(true);
+							System.out.println(Double.parseDouble(introTime.getText()));
+							System.out.println(Double.parseDouble(firstInputs[1]));
+							
+				}
+				else {
+					dispose();
+					Application.launch(TestGraph.class, both);
+				}							
 			}
 		});
 		nextButton.setBounds(475, 302, 89, 23);

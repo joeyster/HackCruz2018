@@ -179,10 +179,94 @@ public class MainWindow extends JFrame {
 		
 		JButton nextButton = new JButton("Next");
 		nextButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				MWConnector mwc = new MWConnector(cellSequence.getText(), textFieldA.getText(),  textFieldT.getText(), textFieldG.getText(), textFieldC.getText(), textField.getText(), textField_1.getText(), textField_2.getText(), textField_3.getText(), textField_4.getText(), textField_5.getText(), textField_6.getText(), textField_7.getText(), textField_8.getText(), textField_9.getText(), textField_10.getText(), textField_11.getText(), timeFrame.getText(), updateInterval.getText());
-				EFWindow efw = new EFWindow(mwc);
-				efw.setVisible(true);
+			public void actionPerformed(ActionEvent arg0) {	
+				double aTo = Double.parseDouble(textField.getText()) + Double.parseDouble(textField_1.getText()) + Double.parseDouble(textField_2.getText());
+				double tTo = Double.parseDouble(textField_3.getText()) + Double.parseDouble(textField_4.getText()) + Double.parseDouble(textField_5.getText());
+				double gTo = Double.parseDouble(textField_6.getText()) + Double.parseDouble(textField_7.getText()) + Double.parseDouble(textField_8.getText());
+				double cTo = Double.parseDouble(textField_9.getText()) + Double.parseDouble(textField_10.getText()) + Double.parseDouble(textField_11.getText());
+				double mutationA = Double.parseDouble(textFieldA.getText());
+				double mutationG = Double.parseDouble(textFieldG.getText());
+				double mutationT = Double.parseDouble(textFieldT.getText());
+				double mutationC = Double.parseDouble(textFieldC.getText());
+				if(textFieldA.getText().equals("") ||  
+				textFieldG.getText().equals("") ||  
+				textFieldT.getText().equals("") ||  
+				textFieldC.getText().equals("") ||  
+				cellSequence.getText().equals("") ||  
+				timeFrame.getText().equals("") ||  
+				updateInterval.getText().equals("") ||  
+				textField.getText().equals("") ||  
+				textField_1.getText().equals("") ||  
+				textField_2.getText().equals("") ||  
+				textField_3.getText().equals("") ||  
+				textField_4.getText().equals("") ||  
+				textField_5.getText().equals("") ||  
+				textField_6.getText().equals("") ||  
+				textField_7.getText().equals("") ||  
+				textField_8.getText().equals("") ||  
+				textField_9.getText().equals("") ||  
+				textField_10.getText().equals("") ||  
+				textField_11.getText().equals("")) {
+					EmptyError ee = new EmptyError();
+					ee.setVisible(true);
+				}
+				
+				else if(!cellSequence.getText().matches("[ATCG]*")) {
+					CellSeqError cse = new CellSeqError();
+					cse.setVisible(true);
+				}
+				
+				else if(!textField.getText().matches("[.0-9]*") ||  
+				!textField_1.getText().matches("[.0-9]*") ||  
+				!textField_2.getText().matches("[.0-9]*") ||  
+				!textField_3.getText().matches("[.0-9]*") ||  
+				!textField_4.getText().matches("[.0-9]*") ||  
+				!textField_5.getText().matches("[.0-9]*") ||  
+				!textField_6.getText().matches("[.0-9]*") ||  
+				!textField_7.getText().matches("[.0-9]*") ||  
+				!textField_8.getText().matches("[.0-9]*") ||  
+				!textField_9.getText().matches("[.0-9]*") ||  
+				!textField_10.getText().matches("[.0-9]*") ||  
+				!textField_11.getText().matches("[.0-9]*")) {
+					DecimalOnlyError doe = new DecimalOnlyError();
+					doe.setVisible(true);
+				}
+				else if(aTo != 1.0 || tTo != 1.0 || gTo != 1.0 || cTo != 1.0) {
+						EqualHundredError ehe = new EqualHundredError();
+						ehe.setVisible(true);
+				}
+				
+				else if(!textFieldA.getText().matches("[.0-9]*") || 
+				!textFieldG.getText().matches("[.0-9]*") ||  
+				!textFieldT.getText().matches("[.0-9]*") ||  
+				!textFieldC.getText().matches("[.0-9]*") ||  
+				!timeFrame.getText().matches("[0-9]*") ||  
+				!updateInterval.getText().matches("[0-9]*")) {
+					IntegerOnlyError ioe = new IntegerOnlyError();
+					ioe.setVisible(true);
+				} 
+			
+
+				else if (mutationA > 1.0 || mutationA < 0.0 || 
+				mutationG > 1.0 || mutationG < 0.0 || 
+				mutationT > 1.0 || mutationT < 0.0 || 
+				mutationC > 1.0 || mutationC < 0.0) {
+					BetweenZeroAndOne bzao = new BetweenZeroAndOne();
+					bzao.setVisible(true);
+				}
+				
+				
+				
+				else if(Double.parseDouble(updateInterval.getText()) >= Double.parseDouble(timeFrame.getText())) {
+					UpdateIntervalError uie = new UpdateIntervalError();
+					uie.setVisible(true);
+				}
+				else {
+					MWConnector mwc = new MWConnector(cellSequence.getText(), textFieldA.getText(),  textFieldT.getText(), textFieldG.getText(), textFieldC.getText(), textField.getText(), textField_1.getText(), textField_2.getText(), textField_3.getText(), textField_4.getText(), textField_5.getText(), textField_6.getText(), textField_7.getText(), textField_8.getText(), textField_9.getText(), textField_10.getText(), textField_11.getText(), timeFrame.getText(), updateInterval.getText());
+					EFWindow efw = new EFWindow(mwc);
+					efw.setVisible(true);
+					dispose();		
+				}
 			}
 		});
 		nextButton.setBounds(470, 377, 89, 23);
