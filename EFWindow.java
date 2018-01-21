@@ -26,7 +26,6 @@ public class EFWindow extends JFrame {
 	private JTextField reproductiveChance;
 	private JTextField reproductiveBS;
 	private JTextField deathBS;
-	private JTextField bsLocation;
 
 	/**
 	 * Launch the application.
@@ -67,6 +66,7 @@ public class EFWindow extends JFrame {
 		contentPane.add(lblBeneficialSequence);
 		
 		beneficialSequence = new JTextArea();
+		beneficialSequence.setText("AAAAAA");
 		beneficialSequence.setBounds(15, 89, 544, 47);
 		contentPane.add(beneficialSequence);
 		beneficialSequence.setColumns(10);
@@ -107,11 +107,13 @@ public class EFWindow extends JFrame {
 		contentPane.add(lblUpdateIntervalseconds);
 		
 		deathChance = new JTextField();
+		deathChance.setText("1");
 		deathChance.setBounds(234, 246, 86, 20);
 		contentPane.add(deathChance);
 		deathChance.setColumns(10);
 		
 		introTime = new JTextField();
+		introTime.setText("15");
 		introTime.setBounds(234, 217, 86, 20);
 		contentPane.add(introTime);
 		introTime.setColumns(10);
@@ -119,7 +121,7 @@ public class EFWindow extends JFrame {
 		JButton nextButton = new JButton("Next");
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				EnvironmentalFactor ef = new EnvironmentalFactor(beneficialSequence.getText(), deathBS.getText(), reproductiveBS.getText(), bsLocation.getText(), introTime.getText(), deathChance.getText(), reproductiveChance.getText());				
+				EnvironmentalFactor ef = new EnvironmentalFactor(beneficialSequence.getText(), deathBS.getText(), reproductiveBS.getText(), introTime.getText(), deathChance.getText(), reproductiveChance.getText());				
 				String[] firstInputs = mwc.getArray();
 				String[] secondInputs = ef.getArray();
 				String[] both = new String[firstInputs.length+secondInputs.length];
@@ -143,6 +145,7 @@ public class EFWindow extends JFrame {
 		contentPane.add(lblReproductiveChance);
 		
 		reproductiveChance = new JTextField();
+		reproductiveChance.setText("0.5");
 		reproductiveChance.setColumns(10);
 		reproductiveChance.setBounds(234, 277, 86, 20);
 		contentPane.add(reproductiveChance);
@@ -153,11 +156,13 @@ public class EFWindow extends JFrame {
 		contentPane.add(lblBsReproductiveChance);
 		
 		reproductiveBS = new JTextField();
+		reproductiveBS.setText("0.9");
 		reproductiveBS.setColumns(10);
 		reproductiveBS.setBounds(473, 149, 86, 20);
 		contentPane.add(reproductiveBS);
 		
 		deathBS = new JTextField();
+		deathBS.setText("0.1");
 		deathBS.setColumns(10);
 		deathBS.setBounds(151, 147, 86, 20);
 		contentPane.add(deathBS);
@@ -166,15 +171,5 @@ public class EFWindow extends JFrame {
 		lblBsDeathChance.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblBsDeathChance.setBounds(20, 148, 164, 14);
 		contentPane.add(lblBsDeathChance);
-		
-		bsLocation = new JTextField();
-		bsLocation.setColumns(10);
-		bsLocation.setBounds(151, 174, 86, 20);
-		contentPane.add(bsLocation);
-		
-		JLabel lblBsLocation = new JLabel("BS Location:");
-		lblBsLocation.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblBsLocation.setBounds(20, 175, 164, 14);
-		contentPane.add(lblBsLocation);
 	}
 }

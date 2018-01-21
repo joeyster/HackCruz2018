@@ -5,7 +5,6 @@ public class EnvironmentalFactor{
 	private String beneficialSeq;
 	private String bsDeath;
 	private String bsReproduction;
-	private String bsLocation;
 	private String introTime;
 	private String deathChance;
 	private String reproductionChance;
@@ -13,10 +12,9 @@ public class EnvironmentalFactor{
 
 	private ArrayList<String> population = new ArrayList<>();
 
-	public EnvironmentalFactor(String beneficialSeq, String bsDeath, String bsReproduction, String bsLocation, String introTime, String deathChance, String reproductionChance){
+	public EnvironmentalFactor(String beneficialSeq, String bsDeath, String bsReproduction, String introTime, String deathChance, String reproductionChance){
 		this.beneficialSeq = beneficialSeq;
 		this.bsDeath = bsDeath;
-		this.bsLocation = bsLocation;
 		this.introTime = introTime;
 		this.bsReproduction = bsReproduction;
 		this.deathChance = deathChance;
@@ -212,14 +210,13 @@ public class EnvironmentalFactor{
 		return true;
 	}
 	public String[] getArray() {
-		String[] arr = new String[7];
+		String[] arr = new String[6];
 		arr[0] = this.beneficialSeq;
 		arr[1] = this.bsDeath;
 		arr[2] = this.bsReproduction;
-		arr[3] = this.bsLocation;
-		arr[4] = this.introTime;
-		arr[5] = this.deathChance;
-		arr[6] = this.reproductionChance;
+		arr[3] = this.introTime;
+		arr[4] = this.deathChance;
+		arr[5] = this.reproductionChance;
 		
 		return arr;
 	}

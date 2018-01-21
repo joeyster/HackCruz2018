@@ -18,9 +18,8 @@ public class MWConnector{
 	private String textField_9;
 	private String textField_10;
 	private String textField_11;
-	private String factorAmount;
 
-	public MWConnector(String cellSequence, String aMutation, String tMutation, String gMutation, String cMutation, String textField, String textField_1, String textField_2, String textField_3, String textField_4, String textField_5, String textField_6, String textField_7, String textField_8, String textField_9, String textField_10, String textField_11, String timeFrame, String timeInterval, String factorAmount){
+	public MWConnector(String cellSequence, String aMutation, String tMutation, String gMutation, String cMutation, String textField, String textField_1, String textField_2, String textField_3, String textField_4, String textField_5, String textField_6, String textField_7, String textField_8, String textField_9, String textField_10, String textField_11, String timeFrame, String timeInterval){
 		this.cellSequence = cellSequence;
 		this.aMutation = aMutation;
 		this.tMutation = tMutation;
@@ -40,13 +39,12 @@ public class MWConnector{
 		this.textField_11 = textField_11;
 		this.timeFrame = timeFrame;
 		this.timeInterval = timeInterval;
-		this.factorAmount = factorAmount;
 	}
 	
 
 
 	public String[] getArray() {
-		String[] arr = new String[20];
+		String[] arr = new String[19];
 		arr[0] = this.cellSequence;
 		arr[1] = this.timeFrame;
 		arr[2] = this.timeInterval;
@@ -66,7 +64,6 @@ public class MWConnector{
 		arr[16] = this.textField_9;
 		arr[17] = this.textField_10;
 		arr[18] = this.textField_11;
-		arr[19] = this.factorAmount;
 		
 		return arr;
 	}

@@ -50,6 +50,7 @@ public class TestGraph extends Application {
     private int midSurPop = 0;
     private int midNonPop = 0;
     private int midPop = 0;
+    private int midPopAfter = 0;
     
     //final populations
     private int finSurPop = 0;
@@ -78,17 +79,12 @@ public class TestGraph extends Application {
     	double textField_9 = Double.parseDouble(stats.get(16));
     	double textField_10 = Double.parseDouble(stats.get(17));
     	double textField_11 = Double.parseDouble(stats.get(18));
-    	double factorAmount = Double.parseDouble(stats.get(19));
-    	beneficialSeq = (stats.get(20));
-    	double bsDeath = Double.parseDouble(stats.get(21));
-    	double bsReproduction = Double.parseDouble(stats.get(22));
-    	try {
-    		double bsLocation = Double.parseDouble(stats.get(23));
-    	} catch	(NumberFormatException e) {
-    	}
-    	double introTime = Double.parseDouble(stats.get(24));
-    	double deathChance = Double.parseDouble(stats.get(25));
-    	double reproductionChance = Double.parseDouble(stats.get(26));
+    	beneficialSeq = (stats.get(19));
+    	double bsDeath = Double.parseDouble(stats.get(20));
+    	double bsReproduction = Double.parseDouble(stats.get(21));
+    	double introTime = Double.parseDouble(stats.get(22));
+    	double deathChance = Double.parseDouble(stats.get(23));
+    	double reproductionChance = Double.parseDouble(stats.get(24));
 
     	EnvironmentalFactor ef = new EnvironmentalFactor();
     	//initialize first cell, assign delivered survival sequence
@@ -99,9 +95,29 @@ public class TestGraph extends Application {
     	cycles = 0;
     	introd = false;
     	
-    	Label lbl = new Label("Cell Population: 0");
+    	Label lbl = new Label("Cell Population:\n1");
     	lbl.setTranslateY(76);
     	lbl.setTranslateX(5);
+    	
+    	Label lbl2 = new Label("Current Time: 0");
+    	lbl2.setTranslateY(286);
+    	lbl2.setTranslateX(5);
+    	
+    	Label lbl3 = new Label("Is EF TRUE?: OFF");
+    	lbl3.setTranslateY(326);
+    	lbl3.setTranslateX(5);
+    	
+    	Label lbl4 = new Label("Max Population:\n1");
+    	lbl4.setTranslateY(236);
+    	lbl4.setTranslateX(5);
+    	
+    	Label lbl5 = new Label("Survivor Cell\nPopulation:\n???");
+    	lbl5.setTranslateY(116);
+    	lbl5.setTranslateX(5);
+    	
+    	Label lbl6 = new Label("Non-Survivor Cell\nPopulation:\n???");
+    	lbl6.setTranslateY(176);
+    	lbl6.setTranslateX(5);
     	
     	//add in all elements into stage
         Group root = new Group();
@@ -112,7 +128,11 @@ public class TestGraph extends Application {
         root.getChildren().add(createSpeedButton());
 //        root.getChildren().add(createResetButton());
         root.getChildren().add(lbl);
-        
+        root.getChildren().add(lbl2);
+        root.getChildren().add(lbl3);
+        root.getChildren().add(lbl4);
+        root.getChildren().add(lbl5);
+        root.getChildren().add(lbl6);
         //SET TIMELINE
         // KeyFrame = interval
         animation = new Timeline();
@@ -133,6 +153,7 @@ public class TestGraph extends Application {
             				midNonPop = ef.getPop().size()-midSurPop;
             				midPop = ef.getPop().size();
             			}
+            			
             			for(int i=0; i < statikksize; i++) {
             				//after intro time, ef rates
             				if(!ef.isSurvival(ef.getPop().get(i), true, i, bsDeath, bsReproduction, aMutation, tMutation, gMutation, cMutation, deathChance, reproductionChance,
@@ -152,7 +173,12 @@ public class TestGraph extends Application {
             		plotTime((double)ef.getPop().size(), (double)ef.getSurcell());
             		//Input population here
             		lbl.setText("Cell Population:\n" + ef.getPop().size());
+            		lbl2.setText("Current Time: " + Math.round(timeInterval*cycles+1));            		
+            		if(introTime < timeInterval*cycles+1) lbl3.setText("Is EF TRUE?: " + "ON");            		
             		if(ef.getPop().size() > max) max = ef.getPop().size();
+            		lbl4.setText("Max Population:\n" + max); 
+            		lbl5.setText("Survivor Cell\nPopulation:\n" + ef.getSurcell()); 
+            		lbl6.setText("Non-Survivor Cell\nPopulation:\n" + (ef.getPop().size() - ef.getSurcell()) ); 
             		cycles++;
             		if(cycles == (int)Math.floor(timeFrame/timeInterval)) {
             			finSurPop = ef.getSurcell();
@@ -243,6 +269,11 @@ public class TestGraph extends Application {
     	maxpop.setTranslateY(105);
     	maxpop.setWrapText(true);
     	maxpop.setPrefWidth(200);
+//    	Label efdeathtoll = new Label("EF Initial Death Toll\n" + midpop-);
+//    	efdeathtoll.setTranslateX(205);
+//    	efdeathtoll.setTranslateY(140);
+//    	efdeathtoll.setWrapText(true);
+//    	efdeathtoll.setPrefWidth(200);
     	
     	root2.getChildren().add(startseq);
     	root2.getChildren().add(finalpop);
@@ -253,6 +284,7 @@ public class TestGraph extends Application {
     	root2.getChildren().add(midsurpop);
     	root2.getChildren().add(midnonpop);
     	root2.getChildren().add(surseq);
+//    	root2.getChildren().add(efdeathtoll);
     }
 /////TODO RESET?
 /*    protected Button createResetButton() {
