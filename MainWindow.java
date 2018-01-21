@@ -103,25 +103,21 @@ public class MainWindow extends JFrame {
 		contentPane.add(lblC);
 		
 		textFieldA = new JTextField();
-		textFieldA.setText(".05");
 		textFieldA.setBounds(358, 169, 86, 20);
 		contentPane.add(textFieldA);
 		textFieldA.setColumns(10);
 		
 		textFieldG = new JTextField();
-		textFieldG.setText(".05");
 		textFieldG.setBounds(358, 194, 86, 20);
 		contentPane.add(textFieldG);
 		textFieldG.setColumns(10);
 		
 		textFieldT = new JTextField();
-		textFieldT.setText(".05");
 		textFieldT.setBounds(473, 169, 86, 20);
 		contentPane.add(textFieldT);
 		textFieldT.setColumns(10);
 		
 		textFieldC = new JTextField();
-		textFieldC.setText(".05");
 		textFieldC.setBounds(473, 194, 86, 20);
 		contentPane.add(textFieldC);
 		textFieldC.setColumns(10);
@@ -167,13 +163,11 @@ public class MainWindow extends JFrame {
 		contentPane.add(lblUpdateIntervalseconds);
 		
 		timeFrame = new JTextField();
-		timeFrame.setText("60");
 		timeFrame.setBounds(221, 344, 86, 20);
 		contentPane.add(timeFrame);
 		timeFrame.setColumns(10);
 		
 		updateInterval = new JTextField();
-		updateInterval.setText("1");
 		updateInterval.setBounds(221, 370, 86, 20);
 		contentPane.add(updateInterval);
 		updateInterval.setColumns(10);
@@ -184,7 +178,6 @@ public class MainWindow extends JFrame {
 		contentPane.add(lblHowManyEnvironment);
 		
 		factorAmount = new JTextField();
-		factorAmount.setText("1");
 		factorAmount.setBounds(260, 410, 86, 20);
 		contentPane.add(factorAmount);
 		factorAmount.setColumns(10);
@@ -211,7 +204,6 @@ public class MainWindow extends JFrame {
 		contentPane.add(lblT_1);
 		
 		textField = new JTextField();
-		textField.setText(".33");
 		textField.setColumns(10);
 		textField.setBounds(174, 230, 86, 20);
 		contentPane.add(textField);
@@ -222,7 +214,6 @@ public class MainWindow extends JFrame {
 		contentPane.add(lblG_1);
 		
 		textField_1 = new JTextField();
-		textField_1.setText(".33");
 		textField_1.setColumns(10);
 		textField_1.setBounds(289, 230, 86, 20);
 		contentPane.add(textField_1);
@@ -233,7 +224,6 @@ public class MainWindow extends JFrame {
 		contentPane.add(lblC_1);
 		
 		textField_2 = new JTextField();
-		textField_2.setText(".34");
 		textField_2.setColumns(10);
 		textField_2.setBounds(406, 230, 86, 20);
 		contentPane.add(textField_2);
@@ -249,7 +239,6 @@ public class MainWindow extends JFrame {
 		contentPane.add(label_4);
 		
 		textField_3 = new JTextField();
-		textField_3.setText(".33");
 		textField_3.setColumns(10);
 		textField_3.setBounds(174, 257, 86, 20);
 		contentPane.add(textField_3);
@@ -260,7 +249,6 @@ public class MainWindow extends JFrame {
 		contentPane.add(lblG_2);
 		
 		textField_4 = new JTextField();
-		textField_4.setText(".33");
 		textField_4.setColumns(10);
 		textField_4.setBounds(289, 257, 86, 20);
 		contentPane.add(textField_4);
@@ -271,7 +259,6 @@ public class MainWindow extends JFrame {
 		contentPane.add(lblC_2);
 		
 		textField_5 = new JTextField();
-		textField_5.setText(".34");
 		textField_5.setColumns(10);
 		textField_5.setBounds(406, 257, 86, 20);
 		contentPane.add(textField_5);
@@ -287,7 +274,6 @@ public class MainWindow extends JFrame {
 		contentPane.add(label_8);
 		
 		textField_6 = new JTextField();
-		textField_6.setText(".33");
 		textField_6.setColumns(10);
 		textField_6.setBounds(174, 285, 86, 20);
 		contentPane.add(textField_6);
@@ -298,7 +284,6 @@ public class MainWindow extends JFrame {
 		contentPane.add(label_9);
 		
 		textField_7 = new JTextField();
-		textField_7.setText(".33");
 		textField_7.setColumns(10);
 		textField_7.setBounds(289, 285, 86, 20);
 		contentPane.add(textField_7);
@@ -309,7 +294,6 @@ public class MainWindow extends JFrame {
 		contentPane.add(lblC_3);
 		
 		textField_8 = new JTextField();
-		textField_8.setText(".34");
 		textField_8.setColumns(10);
 		textField_8.setBounds(406, 285, 86, 20);
 		contentPane.add(textField_8);
@@ -325,7 +309,6 @@ public class MainWindow extends JFrame {
 		contentPane.add(label_12);
 		
 		textField_9 = new JTextField();
-		textField_9.setText(".33");
 		textField_9.setColumns(10);
 		textField_9.setBounds(174, 313, 86, 20);
 		contentPane.add(textField_9);
@@ -336,7 +319,6 @@ public class MainWindow extends JFrame {
 		contentPane.add(label_13);
 		
 		textField_10 = new JTextField();
-		textField_10.setText(".33");
 		textField_10.setColumns(10);
 		textField_10.setBounds(289, 313, 86, 20);
 		contentPane.add(textField_10);
@@ -347,7 +329,6 @@ public class MainWindow extends JFrame {
 		contentPane.add(lblG_3);
 		
 		textField_11 = new JTextField();
-		textField_11.setText(".34");
 		textField_11.setColumns(10);
 		textField_11.setBounds(406, 313, 86, 20);
 		contentPane.add(textField_11);

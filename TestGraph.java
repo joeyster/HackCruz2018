@@ -82,7 +82,10 @@ public class TestGraph extends Application {
     	beneficialSeq = (stats.get(20));
     	double bsDeath = Double.parseDouble(stats.get(21));
     	double bsReproduction = Double.parseDouble(stats.get(22));
-    	String bsLocation = stats.get(23);
+    	try {
+    		double bsLocation = Double.parseDouble(stats.get(23));
+    	} catch	(NumberFormatException e) {
+    	}
     	double introTime = Double.parseDouble(stats.get(24));
     	double deathChance = Double.parseDouble(stats.get(25));
     	double reproductionChance = Double.parseDouble(stats.get(26));
@@ -134,7 +137,7 @@ public class TestGraph extends Application {
             				//after intro time, ef rates
             				if(!ef.isSurvival(ef.getPop().get(i), true, i, bsDeath, bsReproduction, aMutation, tMutation, gMutation, cMutation, deathChance, reproductionChance,
             						textField, textField_1, textField_2, textField_3, textField_4, textField_5, textField_6,
-            						textField_7, textField_8, textField_9, textField_10, textField_11, bsLocation))
+            						textField_7, textField_8, textField_9, textField_10, textField_11))
             					i--;
             					statikksize--;
             			}
@@ -143,7 +146,7 @@ public class TestGraph extends Application {
             			for(int i=0; i < statikksize; i++) {
             				ef.isSurvival(ef.getPop().get(i), false, i, 0, 0, aMutation, tMutation, gMutation, cMutation, 0, 1,
             						textField, textField_1, textField_2, textField_3, textField_4, textField_5, textField_6,
-            						textField_7, textField_8, textField_9, textField_10, textField_11, bsLocation);
+            						textField_7, textField_8, textField_9, textField_10, textField_11);
             			}
             		}
             		plotTime((double)ef.getPop().size(), (double)ef.getSurcell());
@@ -167,7 +170,7 @@ public class TestGraph extends Application {
             	} else {
             		plotTime(0,0);
             		lbl.setText("Cell Population:\n" + "0");
-            		if(max == 0) max = 1;
+            		max = 1;
             		cycles++;
             		if(cycles == (int)Math.floor(timeFrame/timeInterval)) {
             			finSurPop = 0;
