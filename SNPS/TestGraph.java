@@ -44,7 +44,7 @@ public class TestGraph extends Application {
     private boolean introd;
     private int cycles = 0;
     private int speed = 1;
-    private int max = 0;
+    private int max = 1;
     
     //mid, preEF populations
     private int midSurPop = 0;
@@ -196,7 +196,6 @@ public class TestGraph extends Application {
             	} else {
             		plotTime(0,0);
             		lbl.setText("Cell Population:\n" + "0");
-            		max = 1;
             		cycles++;
             		if(cycles == (int)Math.floor(timeFrame/timeInterval)) {
             			finSurPop = 0;
@@ -235,37 +234,37 @@ public class TestGraph extends Application {
     	surseq.setWrapText(true);
     	surseq.setPrefWidth(200);
     	surseq.setTranslateX(5);
-    	surseq.setTranslateY(300);
+    	surseq.setTranslateY(200);
     	Label midpop = new Label("Pre-EF Cell Population:\n" + midPop);
-    	midpop.setTranslateX(405);
+    	midpop.setTranslateX(415);
     	midpop.setWrapText(true);
     	midpop.setPrefWidth(200);
     	Label midsurpop = new Label("Pre-EF Survival Cell Population:\n" + midSurPop);
-    	midsurpop.setTranslateX(405);
+    	midsurpop.setTranslateX(415);
     	midsurpop.setWrapText(true);
     	midsurpop.setPrefWidth(200);
     	midsurpop.setTranslateY(35);
     	Label midnonpop = new Label("Pre-EF Non-Survival Cell Population:\n" + midNonPop);
-    	midnonpop.setTranslateX(405);
+    	midnonpop.setTranslateX(415);
     	midnonpop.setWrapText(true);
     	midnonpop.setPrefWidth(200);
     	midnonpop.setTranslateY(70);
     	Label finalpop = new Label("Final Cell Population:\n" + finPop);
-    	finalpop.setTranslateX(235);
+    	finalpop.setTranslateX(225);
     	finalpop.setWrapText(true);
     	finalpop.setPrefWidth(200);
     	Label finsurpop = new Label("Final Survival Cell Population:\n" + finSurPop);
-    	finsurpop.setTranslateX(235);
+    	finsurpop.setTranslateX(225);
     	finsurpop.setWrapText(true);
     	finsurpop.setPrefWidth(200);
     	finsurpop.setTranslateY(35);
     	Label finnonpop = new Label("Final Non-Survival Cell Population:\n" + finNonPop);
-    	finnonpop.setTranslateX(235);
+    	finnonpop.setTranslateX(225);
     	finnonpop.setWrapText(true);
     	finnonpop.setPrefWidth(200);
     	finnonpop.setTranslateY(70);
     	Label maxpop = new Label("Cell Population Max:\n" + max);
-    	maxpop.setTranslateX(235);
+    	maxpop.setTranslateX(225);
     	maxpop.setTranslateY(125);
     	maxpop.setWrapText(true);
     	maxpop.setPrefWidth(200);
