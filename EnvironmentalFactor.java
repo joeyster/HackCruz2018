@@ -34,6 +34,10 @@ public class EnvironmentalFactor{
 	public int getSurcell() {
 		return surcell;
 	}
+	//for assigning value from TestGraph
+	public void setbeneficialSeq(String ben) {
+		this.beneficialSeq = ben;
+	}
 	
 	public ArrayList<String> getPop() {return population;}
 
@@ -51,6 +55,7 @@ public class EnvironmentalFactor{
 			if(n <= bsDeath){
 				population.remove(index);
 				surcell--;
+				//return false to trigger decrement of indices
 				return false;
 			}
 			n = (double)(rng.nextInt(101))/100;
@@ -123,7 +128,7 @@ public class EnvironmentalFactor{
 				}
 				
 			}
-			else{ //doesnt contain beneficial
+		} else { //doesnt contain beneficial
 				n = (double)(rng.nextInt(101))/100;
 				if(n <= deathChance){
 					population.remove(index);
@@ -199,7 +204,7 @@ public class EnvironmentalFactor{
 					}
 				}
 			}
-		}
+		
 		population.add(newSequence);
 		if(newSequence.contains(this.beneficialSeq)) surcell++;
 		return true;

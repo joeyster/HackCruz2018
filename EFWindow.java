@@ -127,7 +127,7 @@ public class EFWindow extends JFrame {
 					both[i] = firstInputs[i];
 				}
 				int j = 0;
-				for(int i = firstInputs.length; i < secondInputs.length; i++) {
+				for(int i = firstInputs.length; j < secondInputs.length; i++) {
 					both[i] = secondInputs[j];
 					j++;
 				}

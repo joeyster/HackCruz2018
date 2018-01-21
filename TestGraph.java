@@ -39,14 +39,20 @@ public class TestGraph extends Application {
     private double prevY = 10;
     private double y = 10;*/
     
+    private String cellSequence;
     private int cycles = 0;
     private int speed = 1;
     private int max = 0;
+    
+    //final populations
+    private int finSurPop = 0;
+    private int finNonPop = 0;
+    private int finPop = 0;
 
     private void init(Stage primaryStage) {
     	//obtain needed parameters..............................
-    	List<String> stats = this.getParameters().getUnnamed();
-    	String cellSequence = stats.get(0);
+    	List<String>stats = this.getParameters().getUnnamed();
+    	cellSequence = stats.get(0);
     	double timeFrame = Double.parseDouble(stats.get(1));
     	double timeInterval = Double.parseDouble(stats.get(2));
     	double aMutation = Double.parseDouble(stats.get(3));
@@ -69,13 +75,18 @@ public class TestGraph extends Application {
     	String beneficialSeq = (stats.get(20));
     	double bsDeath = Double.parseDouble(stats.get(21));
     	double bsReproduction = Double.parseDouble(stats.get(22));
-    	double bsLocation = Double.parseDouble(stats.get(23));
+    	try {
+    		double bsLocation = Double.parseDouble(stats.get(23));
+    	} catch	(NumberFormatException e) {
+    	}
     	double introTime = Double.parseDouble(stats.get(24));
     	double deathChance = Double.parseDouble(stats.get(25));
     	double reproductionChance = Double.parseDouble(stats.get(26));
 
     	EnvironmentalFactor ef = new EnvironmentalFactor();
+    	//initialize first cell, assign delivered survival sequence
     	ef.getPop().add(cellSequence);
+    	ef.setbeneficialSeq(beneficialSeq);
     	//check if starting sequence has beneficial sequence
     	if(cellSequence.contains(beneficialSeq)) ef.surcellinc();
     	cycles = 0;
@@ -91,13 +102,12 @@ public class TestGraph extends Application {
         root.getChildren().add(createStartButton());
         root.getChildren().add(createStopButton());
         root.getChildren().add(createSpeedButton());
-        root.getChildren().add(createResetButton());
+//        root.getChildren().add(createResetButton());
         root.getChildren().add(lbl);
         
         //SET TIMELINE
         // KeyFrame = interval
         animation = new Timeline();
-        //TODO CHANGE INTERVAL
         animation.getKeyFrames().add(new KeyFrame(Duration.millis(timeInterval*1000), new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent actionEvent) {
                 // 6 minutes data per frame
@@ -105,45 +115,106 @@ public class TestGraph extends Application {
                     nextTime();
                     plotTime();
                 }*/
+            	if(!ef.getPop().isEmpty()) {
                 	//update cell population
-            	int statikksize = ef.getPop().size();
-            	for(int i=0; i < statikksize; i++) {
-            		if(!ef.isSurvival(ef.getPop().get(i), (timeInterval*cycles > introTime), i, bsDeath, bsReproduction, aMutation, tMutation, gMutation, cMutation, deathChance, reproductionChance))
-            			i--;
+            		int statikksize = ef.getPop().size();
+            		if(timeInterval*cycles > introTime) {
+            			for(int i=0; i < statikksize; i++) {
+            				//after intro time, ef rates
+            				if(!ef.isSurvival(ef.getPop().get(i), true, i, bsDeath, bsReproduction, aMutation, tMutation, gMutation, cMutation, deathChance, reproductionChance))
+            					i--;
+            					statikksize--;
+            			}
+            		} else {
+            			//before intro time, 100% repro rate, 0% death rate
+            			for(int i=0; i < statikksize; i++) {
+            				ef.isSurvival(ef.getPop().get(i), false, i, 0, 0, aMutation, tMutation, gMutation, cMutation, 0, 1);
+            			}
+            		}
+            		plotTime((double)ef.getPop().size(), (double)ef.getSurcell());
+            		//Input population here
+            		lbl.setText("Cell Population:\n" + ef.getPop().size());
+            		if(ef.getPop().size() > max) max = ef.getPop().size();
+            		cycles++;
+            		if(cycles == (int)Math.floor(timeFrame/timeInterval)) {
+            			finSurPop = ef.getSurcell();
+            			finNonPop = ef.getPop().size()-finSurPop;
+            			finPop = ef.getPop().size();
+            			Button bn = new Button("Stats");
+            			bn.setPrefSize(45, 25);
+            			bn.setTranslateX(58);
+            			bn.setTranslateY(38);
+            			bn.setOnAction(event -> {
+            				scene2(primaryStage);
+            			});
+            			root.getChildren().add(bn);
+            		}	
+            	} else {
+            		plotTime(0,0);
+            		lbl.setText("Cell Population:\n" + "0");
+            		max = 1;
+            		cycles++;
+            		if(cycles == (int)Math.floor(timeFrame/timeInterval)) {
+            			finSurPop = 0;
+            			finNonPop = 0;
+            			finPop = 0;
+            			Button bn = new Button("Stats");
+            			bn.setPrefSize(45, 25);
+            			bn.setTranslateX(58);
+            			bn.setTranslateY(38);
+            			bn.setOnAction(event -> {
+            				scene2(primaryStage);
+            			});
+            			root.getChildren().add(bn);
+            		}	
             	}
-            	plotTime(ef.getPop().size(), ef.getSurcell());
-            	//Input population here
-            	lbl.setText("Cell Population:\n" + ef.getPop().size());
-            	if(ef.getPop().size() > max) max = ef.getPop().size();
-            	cycles++;
             }
         }));
         
         //Lifetime/interval = cycles
         animation.setCycleCount((int)Math.floor(timeFrame/timeInterval));
     }
-        
-        //////////////////////////////////////////////////Finish screens
-/*    private void init2(Stage primaryStage) {
-        Group root2 = new Group();
-        primaryStage.setScene(new Scene(root2));
-        root2.getChildren().add(lblset());
-        
-    }*/
     
-    protected Group lblset() {
-    	Label startseq = new Label("START SEQUENCE");
-    	Label finalpop = new Label("Final Cell Population:\n" + x);
-    	Label maxpop = new Label("Cell Population Max:\n" + max);
-    	
-    	Group lbls = new Group();
-    	lbls.getChildren().add(startseq);
-    	lbls.getChildren().add(finalpop);
-    	lbls.getChildren().add(maxpop);
-    	return lbls;
+    void scene2(Stage primaryStage) {
+        Group root2 = new Group();
+        Scene sn = new Scene(root2);
+        lblset(root2);
+        primaryStage.setScene(sn);
     }
     
-    protected Button createResetButton() {
+    protected void lblset(Group root2) {
+    	Label startseq = new Label(cellSequence);
+    	startseq.setWrapText(true);
+    	startseq.setPrefWidth(200);
+    	startseq.setTranslateX(5);
+    	Label finalpop = new Label("Final Cell Population:\n" + finPop);
+    	finalpop.setTranslateX(205);
+    	finalpop.setWrapText(true);
+    	finalpop.setPrefWidth(200);
+    	Label finsurpop = new Label("Final Survival Cell Population:\n" + finSurPop);
+    	finsurpop.setTranslateX(205);
+    	finsurpop.setWrapText(true);
+    	finsurpop.setPrefWidth(200);
+    	finsurpop.setTranslateY(35);
+    	Label finnonpop = new Label("Final Non-Survival Cell Population:\n" + finNonPop);
+    	finnonpop.setTranslateX(205);
+    	finnonpop.setWrapText(true);
+    	finnonpop.setPrefWidth(200);
+    	finnonpop.setTranslateY(70);
+    	Label maxpop = new Label("Cell Population Max:\n" + max);
+    	maxpop.setTranslateX(205);
+    	maxpop.setTranslateY(105);
+    	maxpop.setWrapText(true);
+    	maxpop.setPrefWidth(200);
+    	
+    	root2.getChildren().add(startseq);
+    	root2.getChildren().add(finalpop);
+    	root2.getChildren().add(maxpop);
+    	root2.getChildren().add(finsurpop);
+    	root2.getChildren().add(finnonpop);
+    }
+/////TODO RESET?
+/*    protected Button createResetButton() {
     	Button bn = new Button("Reset");
     	bn.setPrefSize(45, 25);
     	bn.setOnAction(actionEvent -> {
@@ -152,7 +223,7 @@ public class TestGraph extends Application {
     	bn.setTranslateX(58);
     	bn.setTranslateY(38);
     	return bn;
-    }
+    }*/
     
     protected Button createStartButton() {
     	Button bn = new Button("Start");
@@ -208,7 +279,7 @@ public class TestGraph extends Application {
         
         //setup barchart
     	final BarChart<String, Number> bc = new BarChart<String, Number>(xAxis, yAxis);
-    	bc.setAnimated(true);
+    	bc.setAnimated(false);
     	bc.setLegendVisible(false);
     	bc.setTitle("Single Nucleotide Polymorphism Simulator");
     	yAxis.setLabel("Distribution of cells");
@@ -262,7 +333,7 @@ public class TestGraph extends Application {
         timeInHours = hours + ((1d/60d)*minutes);
     }*/
 
-    private void plotTime(int popSize, int surSize) {
+    private void plotTime(double popSize, double surSize) {
 /*        if ((timeInHours % 1) == 0) {
             // change of hour
             double oldY = y;
@@ -295,8 +366,8 @@ public class TestGraph extends Application {
         }
         // after 25hours delete old data
         if (timeInHours > 25) minuteDataSeries.getData().remove(0);*/
-        mainSeries.getData().add(new XYChart.Data<String,Number>("Survival Cells", surSize/popSize));
-        mainSeries.getData().add(new XYChart.Data<String,Number>("Non-Survival Cells", 1-(surSize/popSize)));
+        mainSeries.getData().add(new XYChart.Data<String,Number>("Survival Cells", surSize/popSize*100.0));
+        mainSeries.getData().add(new XYChart.Data<String,Number>("Non-Survival Cells", 100.0-(surSize/popSize*100.0)));
     }
 
    public void play() {

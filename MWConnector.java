@@ -46,7 +46,7 @@ public class MWConnector{
 
 
 	public String[] getArray() {
-		String[] arr = new String[17];
+		String[] arr = new String[20];
 		arr[0] = this.cellSequence;
 		arr[1] = this.timeFrame;
 		arr[2] = this.timeInterval;
