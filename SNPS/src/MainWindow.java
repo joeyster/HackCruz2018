@@ -131,6 +131,7 @@ public class MainWindow extends JFrame {
 		cellSequence.setLineWrap(true);
 		
 		JButton btnRandom = new JButton("Random");
+		//randomizes sequence with 100 nucleotides
 		btnRandom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String randomHundred = "";
@@ -178,6 +179,7 @@ public class MainWindow extends JFrame {
 		
 		JButton nextButton = new JButton("Next");
 		nextButton.addActionListener(new ActionListener() {
+			//checks for invalid inputs. should be better way to do this!
 			public void actionPerformed(ActionEvent arg0) {	
 				double aTo = Double.parseDouble(textField.getText()) + Double.parseDouble(textField_1.getText()) + Double.parseDouble(textField_2.getText());
 				double tTo = Double.parseDouble(textField_3.getText()) + Double.parseDouble(textField_4.getText()) + Double.parseDouble(textField_5.getText());

@@ -58,6 +58,9 @@ public class EnvironmentalFactor{
 				//return false to trigger decrement of indices
 				return false;
 			}
+
+			//calculate whether or not mutation happens 
+			//append to newSequence
 			n = (double)(rng.nextInt(101))/100;
 			if(n <= bsReproduction){
 				for(int i = 0; i < cellsLength; i++){
@@ -209,6 +212,8 @@ public class EnvironmentalFactor{
 		if(newSequence.contains(this.beneficialSeq)) surcell++;
 		return true;
 	}
+
+	//used to eventually return a String array needed by TestGraph
 	public String[] getArray() {
 		String[] arr = new String[6];
 		arr[0] = this.beneficialSeq;

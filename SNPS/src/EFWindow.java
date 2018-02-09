@@ -73,6 +73,7 @@ public class EFWindow extends JFrame {
 		beneficialSequence.setLineWrap(true);
 		
 		JButton btnRandom = new JButton("Random");
+		//randomizes sequence with 5 nucleotides
 		btnRandom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String randomHundred = "";
@@ -121,6 +122,8 @@ public class EFWindow extends JFrame {
 		JButton nextButton = new JButton("Next");
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//concat the two arrays, MainWindow's and EFWindow's
+				//why? because TestGraph requires a String array to continue and start the simulation
 				EnvironmentalFactor ef = new EnvironmentalFactor(beneficialSequence.getText(), deathBS.getText(), reproductiveBS.getText(), introTime.getText(), deathChance.getText(), reproductiveChance.getText());				
 				String[] firstInputs = mwc.getArray();
 				String[] secondInputs = ef.getArray();
@@ -133,7 +136,8 @@ public class EFWindow extends JFrame {
 					both[i] = secondInputs[j];
 					j++;
 				}
-				
+
+				//checks for invalid inputs. should be better way to do this!
 				if(beneficialSequence.getText().equals("") ||  
 						deathChance.getText().equals("") ||  
 						introTime.getText().equals("") ||  
